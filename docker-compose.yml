@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+
+  api:
+    build: ./
+    container_name: api-tasklist
+    ports:
+      - 5000:5000
+    env_file:
+      - ./core/.env
+    depends_on:
+      - db
+
+  nginx:
+    build: ./nginx
+    container_name: nginx-tasklist
+    ports:
+      - "80:80"
+    depends_on: 
+      - api
+      
+  db:
+    image: postgres:12-alpine
+    container_name: db-tasklist
+    volumes:
+      - ./.data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=secretpassword
+      - POSTGRES_DB=tasklist
+    ports:
+      - 5432:5432
+    restart: always

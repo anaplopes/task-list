@@ -1,0 +1,11 @@
+{
+  "name": "api-task-list",
+  "version": "1.0.0",
+  "description": "Api crud de lista de tarefas",
+  "engines": {
+    "python": "3.8.2",
+    "flask": "1.1.2"
+  },
+  "main": "core/app.py",
+  "author": "anapaulalopes"
+}
