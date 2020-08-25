@@ -23,6 +23,9 @@ marsh = Marshmallow(app)
 # models
 from core.models import tag, task, tasklist
 
+db.create_all()
+db.session.commit()
+
 # blueprint
 from core.controllers.status import bp_status
 app.register_blueprint(bp_status)
