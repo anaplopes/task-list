@@ -19,7 +19,8 @@ class TaskListModel(db.Model):
     def __init__(self, name):
         self.name = name
 
-
+db.create_all()
+db.session.commit()
 
 class TaskListSchema(marsh.Schema):
     """ Definição de schema de task list """

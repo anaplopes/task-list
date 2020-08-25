@@ -21,10 +21,7 @@ db = SQLAlchemy(app)
 marsh = Marshmallow(app)
 
 # models
-from core.models import tag, task, taskList
-
-db.create_all()
-db.session.commit()
+from core.models import tag, task, tasklist
 
 # blueprint
 from core.controllers.status import bp_status
@@ -36,5 +33,5 @@ app.register_blueprint(bp_tag)
 from core.controllers.task import bp_task
 app.register_blueprint(bp_task)
 
-from core.controllers.taskList import bp_tasklist
+from core.controllers.tasklist import bp_tasklist
 app.register_blueprint(bp_tasklist)

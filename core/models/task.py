@@ -38,6 +38,8 @@ class TaskModel(db.Model):
         self.taskList = taskList
         self.tags = tags
 
+db.create_all()
+db.session.commit()
 
 class TaskSchema(marsh.Schema):
     """ Definição de schema de tasks """

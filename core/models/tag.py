@@ -19,7 +19,8 @@ class TagModel(db.Model):
     def __init__(self, name):
         self.name = name
 
-
+db.create_all()
+db.session.commit()
 
 class TagSchema(marsh.Schema):
     """ Definição de schema de tags """
