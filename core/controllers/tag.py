@@ -11,24 +11,24 @@ class Tag(MethodView):
     def get(self, id=None):
         service = WorkerTagService()
         if id is None:
-            return service.worker.list()   
+            return service.list()   
         else:
-            return service.worker.read(id=id)
+            return service.read(id=id)
                      
 
     def post(self):
         service = WorkerTagService()
-        return service.worker.create()
+        return service.create()
     
     
     def put(self, id):
         service = WorkerTagService()
-        return service.worker.update(id=id)
+        return service.update(id=id)
 
 
     def delete(self, id):
         service = WorkerTagService()
-        return service.worker.delete(id=id)
+        return service.delete(id=id)
 
 
 view = Tag.as_view('tag')

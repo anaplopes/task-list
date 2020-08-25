@@ -11,24 +11,24 @@ class Task(MethodView):
     def get(self, id=None):
         service = WorkerTaskService()
         if id is None:
-            return service.worker.list()   
+            return service.list()   
         else:
-            return service.worker.read(id=id)
+            return service.read(id=id)
                      
 
     def post(self):
         service = WorkerTaskService()
-        return service.worker.create()
+        return service.create()
     
     
     def put(self, id):
         service = WorkerTaskService()
-        return service.worker.update(id=id)
+        return service.update(id=id)
 
 
     def delete(self, id):
         service = WorkerTaskService()
-        return service.worker.delete(id=id)
+        return service.delete(id=id)
 
 
 view = Task.as_view('task')
