@@ -7,26 +7,29 @@ from flask import Blueprint
 bp_task = Blueprint('task', __name__, url_prefix='/api')
 class Task(MethodView):
     
-    def __init__(self):
-        self.worker = WorkerTaskService()
 
     def get(self, id=None):
+        service = WorkerTaskService()
         if id is None:
-            return self.worker.list()   
+            return service.worker.list()   
         else:
-            return self.worker.read(id=id)
+            return service.worker.read(id=id)
                      
 
     def post(self):
-        return self.worker.create()
+        service = WorkerTaskService()
+        return service.worker.create()
     
     
     def put(self, id):
-        return self.worker.update(id=id)
+        service = WorkerTaskService()
+        return service.worker.update(id=id)
 
 
     def delete(self, id):
-        return self.worker.delete(id=id)
+        service = WorkerTaskService()
+        return service.worker.delete(id=id)
+
 
 view = Task.as_view('task')
 bp_task.add_url_rule('/tasks', view_func=view, methods=['GET'])

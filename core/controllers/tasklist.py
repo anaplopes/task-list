@@ -1,32 +1,35 @@
 # -*- coding: utf-8 -*-
 from flask.views import MethodView
-from core.services.worker_taskList import WorkerTaskListService
+from core.services.worker_tasklist import WorkerTaskListService
 from flask import Blueprint
 
 
 bp_tasklist = Blueprint('tasklist', __name__, url_prefix='/api')
 class TaskList(MethodView):
     
-    def __init__(self):
-        self.worker = WorkerTaskListService()
 
     def get(self, id=None):
+        service = WorkerTaskListService()
         if id is None:
-            return self.worker.list()   
+            return service.worker.list()   
         else:
-            return self.worker.read(id=id)
+            return service.worker.read(id=id)
                      
 
     def post(self):
-        return self.worker.create()
+        service = WorkerTaskListService()
+        return service.worker.create()
     
     
     def put(self, id):
-        return self.worker.update(id=id)
+        service = WorkerTaskListService()
+        return service.worker.update(id=id)
 
 
     def delete(self, id):
-        return self.worker.delete(id=id)
+        service = WorkerTaskListService()
+        return service.worker.delete(id=id)
+
 
 view = TaskList.as_view('tasklist')
 bp_tasklist.add_url_rule('/taskList', view_func=view, methods=['GET'])
