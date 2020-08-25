@@ -20,7 +20,6 @@ class TagModel(db.Model):
         self.name = name
 
 
-
 class TagSchema(marsh.Schema):
     """ Definição de schema de tags """
     

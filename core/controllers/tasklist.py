@@ -8,24 +8,27 @@ bp_tasklist = Blueprint('tasklist', __name__, url_prefix='/api')
 class TaskList(MethodView):
     
 
+    def __init__(self):
+        self.worker = WorkerTaskListService()
+    
+
     def get(self, id=None):
-        service = WorkerTaskListService()
         if id is None:
-            return service.list()   
+            return self.worker.list()   
         else:
-            return service.read(id=id)
+            return self.worker.read(id=id)
                      
 
     def post(self):
-        return WorkerTaskListService().create()
+        return self.worker.create()
     
     
     def put(self, id):
-        return WorkerTaskListService().update(id=id)
+        return self.worker.update(id=id)
 
 
     def delete(self, id):
-        return WorkerTaskListService().delete(id=id)
+        return self.worker.delete(id=id)
 
 
 view = TaskList.as_view('tasklist')

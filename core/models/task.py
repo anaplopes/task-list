@@ -39,7 +39,6 @@ class TaskModel(db.Model):
         self.tags = tags
 
 
-
 class TaskSchema(marsh.Schema):
     """ Definição de schema de tasks """
     

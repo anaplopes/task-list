@@ -7,25 +7,27 @@ from flask import Blueprint
 bp_task = Blueprint('task', __name__, url_prefix='/api')
 class Task(MethodView):
     
+    def __init__(self):
+        self.worker = WorkerTaskService()
+    
 
     def get(self, id=None):
-        service = WorkerTaskService()
         if id is None:
-            return service.list()   
+            return self.worker.list()   
         else:
-            return service.read(id=id)
+            return self.worker.read(id=id)
                      
 
     def post(self):
-        return WorkerTaskService().create()
+        return self.worker.create()
     
     
     def put(self, id):
-        return WorkerTaskService().update(id=id)
+        return self.worker.update(id=id)
 
 
     def delete(self, id):
-        return WorkerTaskService().delete(id=id)
+        return self.worker.delete(id=id)
 
 
 view = Task.as_view('task')

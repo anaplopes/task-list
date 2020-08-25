@@ -7,25 +7,27 @@ from flask import Blueprint
 bp_tag = Blueprint('tag', __name__, url_prefix='/api')
 class Tag(MethodView):
     
+    def __init__(self):
+        self.worker = WorkerTagService()
+    
 
     def get(self, id=None):
-        service = WorkerTagService()
         if id is None:
-            return service.list()   
+            return self.worker.list()   
         else:
-            return service.read(id=id)
+            return self.worker.read(id=id)
                      
 
     def post(self):
-        return WorkerTagService().create()
+        return self.worker.create()
     
     
     def put(self, id):
-        return WorkerTagService().update(id=id)
+        return self.worker.update(id=id)
 
 
     def delete(self, id):
-        return WorkerTagService().delete(id=id)
+        return self.worker.delete(id=id)
 
 
 view = Tag.as_view('tag')

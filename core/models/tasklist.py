@@ -20,7 +20,6 @@ class TaskListModel(db.Model):
         self.name = name
 
 
-
 class TaskListSchema(marsh.Schema):
     """ Definição de schema de task list """
     
