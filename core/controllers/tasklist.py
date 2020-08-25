@@ -17,18 +17,15 @@ class TaskList(MethodView):
                      
 
     def post(self):
-        service = WorkerTaskListService()
-        return service.create()
+        return WorkerTaskListService().create()
     
     
     def put(self, id):
-        service = WorkerTaskListService()
-        return service.update(id=id)
+        return WorkerTaskListService().update(id=id)
 
 
     def delete(self, id):
-        service = WorkerTaskListService()
-        return service.delete(id=id)
+        return WorkerTaskListService().delete(id=id)
 
 
 view = TaskList.as_view('tasklist')

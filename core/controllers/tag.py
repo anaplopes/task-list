@@ -17,18 +17,15 @@ class Tag(MethodView):
                      
 
     def post(self):
-        service = WorkerTagService()
-        return service.create()
+        return WorkerTagService().create()
     
     
     def put(self, id):
-        service = WorkerTagService()
-        return service.update(id=id)
+        return WorkerTagService().update(id=id)
 
 
     def delete(self, id):
-        service = WorkerTagService()
-        return service.delete(id=id)
+        return WorkerTagService().delete(id=id)
 
 
 view = Tag.as_view('tag')

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import json
-import logging
 import traceback
 from core.app import db
 from flask import jsonify, request
@@ -17,7 +16,6 @@ class WorkerTagService:
         tag_exist = TagModel.query.filter_by(name=name, isActive=True).first()
         result = tag_schema.dump(tag_exist)
         if tag_exist:
-            logging.info('tag already registered')
             return jsonify({
                 'output': {
                     'data': result,
@@ -71,7 +69,6 @@ class WorkerTagService:
                     }
                 }), 200
             
-            logging.warning('nothing found')
             return jsonify({
                 'output': {
                     'data': [],
