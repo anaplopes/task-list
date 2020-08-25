@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask.views import MethodView
-from core.services.worker_tasklist import WorkerTaskListService
+from core.services.worker_taskList import WorkerTaskListService
 from flask import Blueprint
 
 

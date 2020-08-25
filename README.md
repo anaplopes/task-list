@@ -1,6 +1,6 @@
 # Api Task List
 
-![](ERD.png)
+![](core/ERD.png)
 
 Steps to run this project:
 

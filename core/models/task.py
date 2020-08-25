@@ -6,8 +6,9 @@ from core.utils.generate_uuid import generate_uuid
 
 
 tags = db.Table('tags',
-    db.Column('tag_uuid', db.Integer, db.ForeignKey('tag.uuid'), primary_key=True),
-    db.Column('task_uuid', db.Integer, db.ForeignKey('task.uuid'), primary_key=True)
+    db.Column('uuid', db.String(), primary_key=True, default=generate_uuid()),
+    db.Column('tag_uuid', db.String(), db.ForeignKey('tag.uuid')),
+    db.Column('task_uuid', db.String(), db.ForeignKey('task.uuid'))
 )
 
 class TaskModel(db.Model):
@@ -19,13 +20,12 @@ class TaskModel(db.Model):
     title = db.Column(db.String(200), unique=True, nullable=False)
     notes = db.Column(db.String(), nullable=False)
     priority = db.Column(db.Integer, nullable=False)
-    remindMeOn = db.Column(db.DateTime)
+    remindMeOn = db.Column(db.DateTime(timezone=True))
     activityType = db.Column(db.String())
     status = db.Column(db.String(4), nullable=False)
-    taskList = db.Column(db.String, db.ForeignKey('tasklist.uuid'),
-    tags = db.relationship('TagModel', secondary=tags, lazy='subquery',
-        backref=db.backref('task', lazy=True))
-    create_on = db.Column(db.DateTime, default=datetime.now())
+    taskList = db.Column(db.String(), db.ForeignKey('tasklist.uuid'), nullable=False)
+    tags = db.relationship('TagModel', secondary=tags, backref=db.backref('taglist', lazy='dynamic'))
+    create_on = db.Column(db.DateTime(timezone=True), default=datetime.now())
     isActive = db.Column(db.Boolean, default=True)
     
     def __init__(self, title, notes, priority, remindMeOn, activityType, status, taskList, tags):
@@ -37,10 +37,6 @@ class TaskModel(db.Model):
         self.status = status
         self.taskList = taskList
         self.tags = tags
-
-
-db.create_all()
-db.session.commit()
 
 
 class TaskSchema(marsh.Schema):

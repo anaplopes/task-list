@@ -13,14 +13,12 @@ class TagModel(db.Model):
     uuid = db.Column(db.String(), primary_key=True, default=generate_uuid())
     name = db.Column(db.String(100), nullable=False)
     count = db.Column(db.Integer, nullable=False, default=0)
+    create_on = db.Column(db.DateTime(timezone=True), default=datetime.now())
     isActive = db.Column(db.Boolean, default=True)
     
     def __init__(self, name):
         self.name = name
 
-
-db.create_all()
-db.session.commit()
 
 
 class TagSchema(marsh.Schema):
@@ -31,6 +29,7 @@ class TagSchema(marsh.Schema):
             'uuid',
             'name',
             'count',
+            'create_on'
         )
 
 

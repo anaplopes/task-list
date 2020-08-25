@@ -3,7 +3,7 @@ import json
 import traceback
 from core.app import db
 from flask import jsonify, request
-from core.models.tasklist import TaskListModel, tasklist_schema, tasklists_schema
+from core.models.taskList import TaskListModel, tasklist_schema, tasklists_schema
 
 
 class WorkerTaskListService:
