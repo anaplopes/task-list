@@ -21,7 +21,9 @@ db = SQLAlchemy(app)
 marsh = Marshmallow(app)
 
 # models
-from core.models import tag, task, tasklist
+from core.models import tag
+from core.models import task
+from core.models import tasklist
 
 db.create_all()
 db.session.commit()

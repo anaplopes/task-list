@@ -5,7 +5,7 @@ from datetime import datetime
 from core.utils.generate_uuid import generate_uuid
 
 
-tags = db.Table('tags',
+association_table = db.Table('tags', db.Model.metadata,
     db.Column('uuid', db.String(), primary_key=True, default=generate_uuid),
     db.Column('tag_uuid', db.String(), db.ForeignKey('tag.uuid')),
     db.Column('task_uuid', db.String(), db.ForeignKey('task.uuid'))
@@ -24,7 +24,7 @@ class TaskModel(db.Model):
     activityType = db.Column(db.String())
     status = db.Column(db.String(4), nullable=False)
     taskList = db.Column(db.String(), db.ForeignKey('tasklist.uuid'), nullable=False)
-    tags = db.relationship('TagModel', secondary=tags, backref=db.backref('taglist', lazy='dynamic'))
+    tags = db.relationship('TagModel', secondary=association_table, backref=db.backref('taglist', lazy='dynamic'))
     create_on = db.Column(db.DateTime, default=datetime.now)
     isActive = db.Column(db.Boolean, default=True)
     
