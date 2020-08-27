@@ -10,10 +10,10 @@ class TagModel(db.Model):
     
     __tablename__ = 'tag'
     
-    uuid = db.Column(db.String(), primary_key=True, default=generate_uuid())
+    uuid = db.Column(db.String(), primary_key=True, default=generate_uuid)
     name = db.Column(db.String(100), nullable=False)
     count = db.Column(db.Integer, nullable=False, default=0)
-    create_on = db.Column(db.DateTime(timezone=True), default=datetime.now())
+    create_on = db.Column(db.DateTime, default=datetime.now)
     isActive = db.Column(db.Boolean, default=True)
     
     def __init__(self, name):
