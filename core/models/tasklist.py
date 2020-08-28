@@ -12,7 +12,7 @@ class TaskListModel(db.Model):
     
     uuid = db.Column(db.String(), primary_key=True, default=generate_uuid)
     name = db.Column(db.String(100), nullable=False)
-    create_on = db.Column(db.DateTime, default=datetime.now)
+    create_on = db.Column(db.DateTime, default=datetime.utcnow)
     isActive = db.Column(db.Boolean, default=True)
     task = db.relationship('TaskModel')
     

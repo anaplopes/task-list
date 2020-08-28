@@ -3,6 +3,7 @@ import json
 import traceback
 from core.app import db
 from flask import jsonify, request
+from core.models.tag import TagModel, tag_schema, tags_schema
 from core.models.task import TaskModel, task_schema, tasks_schema
 
 
@@ -11,14 +12,52 @@ class WorkerTaskService:
         e as requisições ao db """
     
     def create(self):
+        activityTypeList = ['indoors', 'outdoors']
+        statusList = ['open', 'done']
+        priorityList = [0, 1, 2]
+        
         title = request.json['title']
         notes = request.json['notes']
-        priority = request.json['priority']
         remindMeOn = request.json['remindMeOn']
-        activityType = request.json['activityType']
-        status = request.json['status']
         taskList = request.json['taskList']
+        
+        priority = request.json['priority']
+        if priority not in priorityList:
+            return jsonify({
+                'output': {
+                    'data': [],
+                    'message': "priority don't exist",
+                    'error': None,
+                    'isValid': False
+                }
+            }), 404
+        
+        activityType = request.json['activityType']
+        if activityType not in activityTypeList:
+            return jsonify({
+                'output': {
+                    'data': [],
+                    'message': "activityType don't exist",
+                    'error': None,
+                    'isValid': False
+                }
+            }), 404
+        
+        status = request.json['status']
+        if status not in statusList:
+            return jsonify({
+                'output': {
+                    'data': [],
+                    'message': "status don't exist",
+                    'error': None,
+                    'isValid': False
+                }
+            }), 404
+            
         tags = request.json['tags']
+        for each in tags:
+            tag = TagModel.query.filter_by(uuid=tag, isActive=True).first()
+            tag.count += 1
         
         task_exist = TaskModel.query.filter_by(title=title, isActive=True).first()
         result = task_schema.dump(task_exist)

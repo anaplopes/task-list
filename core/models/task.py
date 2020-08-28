@@ -25,7 +25,7 @@ class TaskModel(db.Model):
     status = db.Column(db.String(4), nullable=False)
     taskList = db.Column(db.String(), db.ForeignKey('tasklist.uuid'), nullable=False)
     tags = db.relationship('TagModel', secondary=association_table, backref=db.backref('taglist', lazy='dynamic'))
-    create_on = db.Column(db.DateTime, default=datetime.now)
+    create_on = db.Column(db.DateTime, default=datetime.utcnow)
     isActive = db.Column(db.Boolean, default=True)
     
     def __init__(self, title, notes, priority, remindMeOn, activityType, status, taskList, tags):
