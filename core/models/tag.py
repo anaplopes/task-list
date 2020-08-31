@@ -25,6 +25,7 @@ class TagSchema(marsh.Schema):
     """ Definição de schema de tags """
     
     class Meta:
+        model = TagModel
         fields = (
             'uuid',
             'name',

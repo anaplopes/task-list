@@ -2,6 +2,7 @@
 import json
 import traceback
 from core.app import db
+from datetime import datetime
 from flask import jsonify, request
 from core.models.tag import TagModel, tag_schema, tags_schema
 from core.models.task import TaskModel, task_schema, tasks_schema
@@ -11,53 +12,18 @@ class WorkerTaskService:
     """ Serviço responsável pela regra de negócio 
         e as requisições ao db """
     
-    def create(self):
-        activityTypeList = ['indoors', 'outdoors']
-        statusList = ['open', 'done']
-        priorityList = [0, 1, 2]
-        
+    def create(self):        
         title = request.json['title']
         notes = request.json['notes']
-        remindMeOn = request.json['remindMeOn']
-        taskList = request.json['taskList']
-        
         priority = request.json['priority']
-        if priority not in priorityList:
-            return jsonify({
-                'output': {
-                    'data': [],
-                    'message': "priority don't exist",
-                    'error': None,
-                    'isValid': False
-                }
-            }), 404
-        
         activityType = request.json['activityType']
-        if activityType not in activityTypeList:
-            return jsonify({
-                'output': {
-                    'data': [],
-                    'message': "activityType don't exist",
-                    'error': None,
-                    'isValid': False
-                }
-            }), 404
-        
         status = request.json['status']
-        if status not in statusList:
-            return jsonify({
-                'output': {
-                    'data': [],
-                    'message': "status don't exist",
-                    'error': None,
-                    'isValid': False
-                }
-            }), 404
-            
+        taskList = request.json['taskList']
         tags = request.json['tags']
-        for each in tags:
-            tag = TagModel.query.filter_by(uuid=tag, isActive=True).first()
-            tag.count += 1
+        
+        remindMeOn = request.json['remindMeOn']
+        if remindMeOn:
+            remindMeOn = datetime.strptime(request.json['remindMeOn'], '%Y-%m-%dT%H:%M:%S.%f')
         
         task_exist = TaskModel.query.filter_by(title=title, isActive=True).first()
         result = task_schema.dump(task_exist)
@@ -71,8 +37,16 @@ class WorkerTaskService:
                 }
             }), 400
         
-        task = TaskModel(title, notes, priority, remindMeOn, activityType, status, taskList, tags)
+        task = TaskModel(title, notes, priority, remindMeOn, activityType, status, taskList)
         try:
+            for each in tags:
+                tag = TagModel.query.filter_by(name=each, isActive=True).first()
+                if not tag:
+                    tag = TagModel(name=each, count=1)
+                else:
+                    tag.count += 1
+                
+                task.tags.append(tag)
             db.session.add(task)
             db.session.commit()
             result = task_schema.dump(task)

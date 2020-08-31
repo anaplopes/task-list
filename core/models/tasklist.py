@@ -24,6 +24,7 @@ class TaskListSchema(marsh.Schema):
     """ Definição de schema de task list """
     
     class Meta:
+        model = TaskListModel
         fields = (
             'uuid',
             'name',
