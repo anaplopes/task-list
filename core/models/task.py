@@ -34,7 +34,7 @@ class TaskModel(db.Model):
     activityType = db.Column(db.Enum('indoors', 'outdoors', name='activityType'), nullable=False)
     status = db.Column(db.Enum('open', 'done', name='status'), nullable=False)
     taskList = db.Column(db.String(), db.ForeignKey('tasklist.uuid'), nullable=False)    
-    tags = db.relationship("TagModel", secondary=tagship, lazy='subquery', backref=db.backref('tags', lazy=True))    
+    tags = db.relationship("TagModel", secondary=tagship, backref=db.backref('tags', lazy='dynamic'))    
     create_on = db.Column(db.DateTime, default=datetime.utcnow)
     isActive = db.Column(db.Boolean, default=True)
     
@@ -47,7 +47,7 @@ class TaskModel(db.Model):
         self.status = status
         self.taskList = taskList
         self.tags = tags
-
+        
 
 class TaskSchema(marsh.Schema):
     """ Definição de schema de tasks """
