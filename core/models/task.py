@@ -14,7 +14,7 @@ class TagshipSchema(marsh.Schema):
     """ Definição de schema de tagship """
     
     class Meta:
-        include_fk = True
+        model = tagship
         fields = (
             'tag_uuid',
             'task_uuid'
@@ -64,11 +64,11 @@ class TaskSchema(marsh.Schema):
             'activityType',
             'status',
             'taskList',
-            'tags',
-            'create_on'
+            'create_on',
+            'tags'
         )
 
-        tags = marsh.Nested(TagshipSchema, many=True)
+    tags = marsh.Nested(TagshipSchema, many=True)
 
 task_schema = TaskSchema()
 tasks_schema = TaskSchema(many=True)
