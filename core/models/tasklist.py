@@ -14,7 +14,7 @@ class TaskListModel(db.Model):
     name = db.Column(db.String(100), nullable=False)
     create_on = db.Column(db.DateTime, default=datetime.utcnow)
     isActive = db.Column(db.Boolean, default=True)
-    task = db.relationship('TaskModel')
+    task = db.relationship('TaskModel', lazy=True)
     
     def __init__(self, name):
         self.name = name

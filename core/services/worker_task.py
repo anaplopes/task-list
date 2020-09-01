@@ -12,7 +12,7 @@ class WorkerTaskService:
     """ Serviço responsável pela regra de negócio 
         e as requisições ao db """
     
-    def create(self):        
+    def create(self):
         title = request.json['title']
         notes = request.json['notes']
         priority = request.json['priority']
@@ -37,8 +37,8 @@ class WorkerTaskService:
                 }
             }), 400
         
-        task = TaskModel(title, notes, priority, remindMeOn, activityType, status, taskList)
         try:
+            tag_list = []
             for each in tags:
                 tag = TagModel.query.filter_by(name=each, isActive=True).first()
                 if not tag:
@@ -46,7 +46,9 @@ class WorkerTaskService:
                 else:
                     tag.count += 1
                 
-                task.tags.append(tag)
+                tag_list.append(tag)
+                
+            task = TaskModel(title, notes, priority, remindMeOn, activityType, status, taskList, tag_list)
             db.session.add(task)
             db.session.commit()
             result = task_schema.dump(task)
