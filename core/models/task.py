@@ -3,23 +3,13 @@ from core.app import db
 from core.app import marsh
 from datetime import datetime
 from core.utils.generate_uuid import generate_uuid
+from core.models.tag import TagSchema
 
 
 tagship = db.Table('tagship',
-    db.Column('tag_uuid', db.String(), db.ForeignKey('tag.uuid'), primary_key=True),
-    db.Column('task_uuid', db.String(), db.ForeignKey('task.uuid'), primary_key=True)
+    db.Column('task_uuid', db.String(), db.ForeignKey('task.uuid'), primary_key=True),
+    db.Column('tag_uuid', db.String(), db.ForeignKey('tag.uuid'), primary_key=True)
 )
-
-class TagshipSchema(marsh.Schema):
-    """ Definição de schema de tagship """
-    
-    class Meta:
-        model = tagship
-        fields = (
-            'tag_uuid',
-            'task_uuid'
-        )
-
 
 class TaskModel(db.Model):
     """ Definição de modelo de task """
@@ -33,8 +23,8 @@ class TaskModel(db.Model):
     remindMeOn = db.Column(db.DateTime)
     activityType = db.Column(db.Enum('indoors', 'outdoors', name='activityType'), nullable=False)
     status = db.Column(db.Enum('open', 'done', name='status'), nullable=False)
-    taskList = db.Column(db.String(), db.ForeignKey('tasklist.uuid'), nullable=False)    
-    tags = db.relationship("TagModel", secondary=tagship, backref=db.backref('tags', lazy='dynamic'))    
+    taskList = db.Column(db.String(), db.ForeignKey('tasklist.uuid'), nullable=False)
+    tags = db.relationship("TagModel", secondary=tagship, backref=db.backref('tasks', lazy='dynamic'))
     create_on = db.Column(db.DateTime, default=datetime.utcnow)
     isActive = db.Column(db.Boolean, default=True)
     
@@ -64,11 +54,11 @@ class TaskSchema(marsh.Schema):
             'activityType',
             'status',
             'taskList',
-            'create_on',
-            'tags'
+            'tags',
+            'create_on'
         )
 
-    tags = marsh.Nested(TagshipSchema, many=True)
+    tags = marsh.Nested(TagSchema, many=True)
 
 task_schema = TaskSchema()
 tasks_schema = TaskSchema(many=True)
