@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from core.app import marsh
-from core.models.tag import TagSchema
 from core.models.task import TaskModel
+from core.schemas.tag import TagSchema
 
 
 class TaskSchema(marsh.Schema):
