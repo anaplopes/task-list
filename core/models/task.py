@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 from core.app import db
-from core.app import marsh
 from datetime import datetime
 from core.utils.generate_uuid import generate_uuid
-from core.models.tag import TagSchema
 
 
 tagship = db.Table('tagship',
@@ -37,28 +35,3 @@ class TaskModel(db.Model):
         self.status = status
         self.taskList = taskList
         self.tags = tags
-        
-
-class TaskSchema(marsh.Schema):
-    """ Definição de schema de tasks """
-    
-    class Meta:
-        model = TaskModel
-        include_fk = True
-        fields = (
-            'uuid',
-            'title',
-            'notes',
-            'priority',
-            'remindMeOn',
-            'activityType',
-            'status',
-            'taskList',
-            'tags',
-            'create_on'
-        )
-
-    tags = marsh.Nested(TagSchema, many=True)
-
-task_schema = TaskSchema()
-tasks_schema = TaskSchema(many=True)

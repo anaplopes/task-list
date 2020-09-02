@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from core.app import db
-from core.app import marsh
 from datetime import datetime
 from core.utils.generate_uuid import generate_uuid
 
@@ -19,20 +18,3 @@ class TagModel(db.Model):
     def __init__(self, name, count=None):
         self.name = name
         self.count = count
-
-
-class TagSchema(marsh.Schema):
-    """ Definição de schema de tags """
-    
-    class Meta:
-        model = TagModel
-        fields = (
-            'uuid',
-            'name',
-            'count',
-            'create_on'
-        )
-
-
-tag_schema = TagSchema()
-tags_schema = TagSchema(many=True)

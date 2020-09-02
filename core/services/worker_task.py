@@ -4,8 +4,10 @@ import traceback
 from core.app import db
 from datetime import datetime
 from flask import jsonify, request
-from core.models.tag import TagModel, tag_schema, tags_schema
-from core.models.task import TaskModel, task_schema, tasks_schema
+from core.models.tag import TagModel
+from core.models.task import TaskModel
+from core.schemas.tag import tag_schema, tags_schema
+from core.schemas.task import task_schema, tasks_schema
 
 
 class WorkerTaskService:

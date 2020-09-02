@@ -3,7 +3,8 @@ import json
 import traceback
 from core.app import db
 from flask import jsonify, request
-from core.models.tag import TagModel, tag_schema, tags_schema
+from core.models.tag import TagModel
+from core.schemas.tag import tag_schema, tags_schema
 
 
 class WorkerTagService:

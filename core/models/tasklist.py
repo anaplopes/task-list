@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from core.app import db
-from core.app import marsh
 from datetime import datetime
 from core.utils.generate_uuid import generate_uuid
 
@@ -18,19 +17,3 @@ class TaskListModel(db.Model):
     
     def __init__(self, name):
         self.name = name
-
-
-class TaskListSchema(marsh.Schema):
-    """ Definição de schema de task list """
-    
-    class Meta:
-        model = TaskListModel
-        fields = (
-            'uuid',
-            'name',
-            'create_on'
-        )
-
-
-tasklist_schema = TaskListSchema()
-tasklists_schema = TaskListSchema(many=True)
