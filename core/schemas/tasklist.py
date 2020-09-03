@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from core.app import marsh
+from core.app import ma
 from core.models.tasklist import TaskListModel
 
 
-class TaskListSchema(marsh.Schema):
+class TaskListSchema(ma.Schema):
     """ Definição de schema de task list """
     
     class Meta:

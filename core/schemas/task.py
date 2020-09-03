@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from core.app import marsh
+from core.app import ma
 from core.models.task import TaskModel
 from core.schemas.tag import TagSchema
 
 
-class TaskSchema(marsh.Schema):
+class TaskSchema(ma.Schema):
     """ Definição de schema de tasks """
     
     class Meta:
@@ -23,7 +23,7 @@ class TaskSchema(marsh.Schema):
             'create_on'
         )
 
-    tags = marsh.Nested(TagSchema, many=True)
+    tags = ma.Nested(TagSchema, many=True)
 
 
 task_schema = TaskSchema()

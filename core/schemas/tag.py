@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from core.app import marsh
+from core.app import ma
 from core.models.tag import TagModel
 
 
-class TagSchema(marsh.Schema):
+class TagSchema(ma.Schema):
     """ Definição de schema de tags """
     
     class Meta:

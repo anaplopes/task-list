@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from core.app import app
+from core.app import create_app
 
 
 if __name__ == '__main__':
-    app.run()
+    create_app.run()
