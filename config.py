@@ -4,30 +4,34 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class BaseConfig:
-    """Base configuration."""
-    SECRET_KEY = os.getenv('SECRET_KEY', '')
+    """ Base configuration """
+    
     DEBUG = False
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    CONNECTION_URL_DEFAULT = 'sqlite:///' + os.path.join(basedir, 'app.db')
-    SQLALCHEMY_DATABASE_URI = os.getenv('CONNECTION_URL', CONNECTION_URL_DEFAULT)
+    TESTING = False
     BCRYPT_LOG_ROUNDS = 13
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECRET_KEY = os.getenv('SECRET_KEY', '')
+    DATABASE_URI_DEFAULT = 'sqlite:///' + os.path.join(basedir, 'app.db')
+
+
+class ProductionConfig(BaseConfig):
+    """ Production configuration """
+    
+    DEBUG = False
+    SQLALCHEMY_DATABASE_URI = os.getenv('CONNECTION_URL', '')
 
 
 class DevelopmentConfig(BaseConfig):
-    """Development configuration."""
+    """ Development configuration """
+    
     DEBUG = True
     BCRYPT_LOG_ROUNDS = 4
 
 
 class TestingConfig(BaseConfig):
-    """Testing configuration."""
+    """ Testing configuration """
+    
     DEBUG = True
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = BaseConfig.SQLALCHEMY_DATABASE_URI + '_test'
-    PRESERVE_CONTEXT_ON_EXCEPTION = False
     BCRYPT_LOG_ROUNDS = 4
-
-
-class ProductionConfig(BaseConfig):
-    """Production configuration."""
-    DEBUG = False
+    PRESERVE_CONTEXT_ON_EXCEPTION = False
